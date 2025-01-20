@@ -22,10 +22,10 @@ export default function Home() {
   },[dispatch])
   return <>
    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 2 }}>
-  <Box sx={{ gridColumn: 'span 3' }}>
+  <Box sx={{ gridColumn: 'span 2' }}>
     
   </Box>
-  <Box sx={{ gridColumn: 'span 6' }}>
+  <Box sx={{ gridColumn: 'span 8' }}>
     <PostForm/>
     {allPosts.length>0 ? allPosts.map((post:PostType)=>{return <PostCard key={post._id} postObj={post}/>}) 
     : <Stack
@@ -39,7 +39,7 @@ export default function Home() {
   </Stack> 
   } 
   </Box>
-  <Box sx={{ gridColumn: 'span 3' }}>
+  <Box sx={{ gridColumn: 'span 2' }}>
     
   </Box>
   

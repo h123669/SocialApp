@@ -23,7 +23,7 @@ export default function PostCard({ postObj, showAllComments }: { postObj: PostTy
   const comments = Array.isArray(postObj?.comments) ? postObj.comments : [];
 
   return (
-    <Card sx={{ maxWidth: "100%", mt: 1 }}>
+    <Card sx={{ maxWidth: "100%", mt: 1, padding: { xs: 2, sm: 3 }, borderRadius: 2 }}>
       <CardHeader
         avatar={<Image src={postObj?.user?.photo} width={50} height={50} alt="photo" />}
         action={
@@ -33,6 +33,10 @@ export default function PostCard({ postObj, showAllComments }: { postObj: PostTy
         }
         title={postObj?.user?.name}
         subheader={new Date(postObj?.createdAt).toDateString()}
+        sx={{
+          paddingBottom: { xs: 1, sm: 2 },
+          paddingTop: { xs: 1, sm: 2 }
+        }}
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -45,6 +49,7 @@ export default function PostCard({ postObj, showAllComments }: { postObj: PostTy
           height="250"
           image={postObj?.image}
           alt="Post image"
+          sx={{ objectFit: 'cover', borderRadius: 1, marginBottom: 2 }}
         />
       )}
 
@@ -80,7 +85,13 @@ export default function PostCard({ postObj, showAllComments }: { postObj: PostTy
         </Button>
       )}
 
-      <TextField multiline fullWidth minRows={2} placeholder="Add your comment" sx={{ mt: 1 }} />
+      <TextField
+        multiline
+        fullWidth
+        minRows={2}
+        placeholder="Add your comment"
+        sx={{ mt: 1 }}
+      />
     </Card>
   );
 }
