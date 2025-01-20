@@ -9,15 +9,20 @@ const initialState: { allPosts: PostType[], isLoading: boolean, details: PostTyp
 };
 
 export const getPostsFun = createAsyncThunk("getPosts/getPostsFun", () => {
+  const token = localStorage.getItem("userToken");
+  
+  if (!token) {
+    return Promise.reject(new Error('User not authenticated'));
+  }
+
   return axios
     .get(`https://linked-posts.routemisr.com/posts?limit=50&page=49`, {
       headers: {
-        token: localStorage.getItem("userToken") // إرسال الـ token في الهيدر
+        token: token,
       }
     })
     .then((res) => {
-      // إرجاع البيانات فقط بدلاً من الكائن الكامل
-      return res.data; // res.data يجب أن يحتوي على الـ posts
+      return res.data;
     })
     .catch((err) => {
       return err;

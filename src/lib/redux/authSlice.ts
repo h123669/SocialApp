@@ -11,14 +11,18 @@ interface FormValues {
   }
 const initialState:{userToken:null|string,userData:null|string,isLoading:boolean,isError:boolean }=
 {userToken:null,userData:null,isLoading:false,isError:false}
-export const submitLogin= createAsyncThunk("authSlice/submitLogin",(formval:{email:string,password:string})=>{
-    return axios.post(`https://linked-posts.routemisr.com/users/signin`,formval
-    ).then((resp)=>{
-        return resp
-    }).catch((err)=>{
-        return err
-    })
-})
+export const submitLogin = createAsyncThunk('authSlice/submitLogin', async (formval: { email: string; password: string }) => {
+    try {
+      const response = await axios.post('https://linked-posts.routemisr.com/users/signin', formval);
+      
+      return {
+        token: response.data.token,  
+        message: response.data.message, 
+      };
+    } catch (error) {
+      return Promise.reject(error); 
+    }
+  });
 
 export const submitRegister= createAsyncThunk("authSlice/submitRegister",(formval:FormValues)=>{
     return axios.post(`https://linked-posts.routemisr.com/users/signup`,formval
@@ -41,7 +45,6 @@ const authSlice =createSlice({
             state.isLoading=true
         })
         builder.addCase(submitLogin.fulfilled,(state,action)=>{
-            console.log(action?.payload?.data?.token)
             state.userToken=action?.payload?.data?.token
             
         })
@@ -54,7 +57,6 @@ const authSlice =createSlice({
             state.isLoading=true
         })
         builder.addCase(submitRegister.fulfilled,(state,action)=>{
-            console.log(action?.payload?.data?.token)
             state.userToken=action?.payload?.data?.token
             
         })

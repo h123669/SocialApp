@@ -21,23 +21,25 @@ export default function Login() {
     email:"",
     password:"",
   }
-const formik =useFormik({
-  initialValues,
-  onSubmit:(val)=>{
-    dispatch(submitLogin(val)).then((response)=>{
-      console.log(response?.payload?.data?.token)
-      localStorage.setItem("userToken", response?.payload?.data?.token);
-      if(response?.payload?.data?.message=="success"){
-        toast.success('Welcome ...!')
-        router.push("/")
-      }else{
-        toast.error('invalid mail or password ...')
-      }
-    }).catch((error)=>{
-      console.log(error)
-    });
-  },
-})
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (val) => {
+      dispatch(submitLogin(val))
+        .then((response) => {
+          if (response?.payload?.token) {
+            localStorage.setItem('userToken', response.payload.token);
+            toast.success('Welcome ...!');
+            router.push('/');
+          } else {
+            toast.error('Invalid email or password...');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  });
+
   return <>
   <h2>Login Pages</h2>
   <Container maxWidth="sm">

@@ -7,4 +7,10 @@ export const store = configureStore({
     authReducer,
     postReducer
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredPaths: ['payload.headers'],  // تجاهل الـ headers في الـ payload
+      },
+    }),
 });
